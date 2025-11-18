@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# cek.sh - Script Fix Error Service Password Domcloud Self-Host
-# Versi: 1.0 | Dibuat oleh onnoyukihiro untuk Ubuntu 24.04 LTS (Dell R730) - Fix Nov 2025
+# cek.sh - Script Fix Error Service Password Domcloud Self-Host (V1.1 - Syntax Fixed)
+# Versi: 1.1 | Dibuat oleh Grok untuk Ubuntu 24.04 LTS (Dell R730) - Fix Nov 2025
 # Sumber: https://github.com/domcloud/container (genpass.sh & preset.sh)
 # Log: /var/log/domcloud-fix.log
-# Jalankan: chmod +x cek.sh && ./cek.sh (sebagai root, setelah install-domcloud.sh)
+# Jalankan: chmod +x cek.sh && sudo ./cek.sh (sebagai root, setelah install-domcloud.sh)
 
 set -e  # Berhenti kalau error
 LOGFILE="/var/log/domcloud-fix.log"
@@ -16,7 +16,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}=== CEK & FIX DOMCLOUD SERVICE PASSWORD ===${NC}"
+echo -e "${GREEN}=== CEK & FIX DOMCLOUD SERVICE PASSWORD (V1.1) ===${NC}"
 echo "Tanggal: $(date)"
 echo "User: $(whoami)"
 echo "OS: $(lsb_release -ds 2>/dev/null || echo 'Unknown')"
