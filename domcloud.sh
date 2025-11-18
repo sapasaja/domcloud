@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# install-domcloud.sh - Script Otomatis Install Domcloud Self-Host
-# Versi: 1.0 | Dibuat oleh onnoyukihiro untuk Ubuntu 24.04 LTS (Dell R730)
+# install-domcloud.sh - Script Otomatis Install Domcloud Self-Host (V1.1)
+# Versi: 1.1 | Dibuat oleh onnoyukihiro untuk Ubuntu 24.04 LTS (Dell R730) - Update Nov 2025
 # Sumber: https://github.com/domcloud/container
 # Log: /var/log/domcloud-install.log
 # Jalankan: chmod +x install-domcloud.sh && ./install-domcloud.sh (sebagai root)
@@ -16,7 +16,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}=== INSTALL DOMCLOUD SELF-HOST ===${NC}"
+echo -e "${GREEN}=== INSTALL DOMCLOUD SELF-HOST (V1.1) ===${NC}"
 echo "Tanggal: $(date)"
 echo "User: $(whoami)"
 echo "OS: $(lsb_release -ds 2>/dev/null || echo 'Unknown')"
@@ -44,9 +44,16 @@ apt update && apt upgrade -y && apt autoremove -y
 # Install prasyarat (curl, git, dll.)
 apt install curl git wget unzip -y
 
-# 3. Install Domcloud Core
-OS="ubuntu"
-echo -e "${GREEN}Install core Domcloud...${NC}"
+# 3. Deteksi OS & Install Domcloud Core (Dengan if-then-else)
+echo -e "${GREEN}Deteksi OS & Install core Domcloud...${NC}"
+if [ -f /etc/lsb-release ]; then OS=ubuntu; elif [ -f /etc/redhat-release ]; then OS=rocky; else OS=unknown; fi
+echo "OS terdeteksi: $OS"
+
+if [[ $OS == "unknown" ]]; then
+    echo -e "${RED}Error: OS tidak didukung (bukan Ubuntu/Rocky). Install manual atau reinstall OS.${NC}"
+    exit 1
+fi
+
 curl -sSL "https://github.com/domcloud/container/raw/refs/heads/master/install-$OS.sh" | bash
 curl -sSL "https://github.com/domcloud/container/raw/refs/heads/master/install-extra.sh" | bash
 curl -sSL "https://github.com/domcloud/container/raw/refs/heads/master/preset.sh" | bash
